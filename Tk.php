@@ -7,6 +7,7 @@
 		private $tk_nr;
 		private $data;
 
+		//<editor-fold desc="Rule Definitions">
 		/** @var  Tk\Rule[][] */
 		static $tk_definitions;
 
@@ -83,6 +84,7 @@
 
 			return self::$tk_definitions;
 		}
+		//</editor-fold>
 
 		public function __construct($tk_number, $data = null)
 		{
@@ -150,6 +152,7 @@
 			}
 		}
 
+		//<editor-fold desc="Getter, Setter, and Strings">
 		public function __get($key)
 		{
 			if(isset(self::$tk_definitions[$this->tk_nr][$key]))
@@ -171,6 +174,7 @@
 		{
 			return implode($this->data);
 		}
+		//</editor-fold>
 
 		//<editor-fold desc="ArrayAccess wrapers">
 		public function offsetExists($offset)
