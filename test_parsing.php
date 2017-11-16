@@ -2,8 +2,7 @@
 
 	date_default_timezone_set(@date_default_timezone_get());
 
-	require_once('Tk/Rule.php');
-	require_once('Tk.php');
+	require_once('autoload.php');
 
 	use \Spiro\Puggan\Bankgiro\Tk;
 
