@@ -68,6 +68,6 @@
 				$tks = array_merge($tks, $this->customer_to_tks($customer));
 			}
 			$tks[] = new Bankgiro\Tk59(['Antal' => count($tks) - 1]);
-			return implode(PHP_EOL, $tks[]);
+			return implode(PHP_EOL, $tks);
 		}
 	}
