@@ -36,3 +36,5 @@ TK_FILE;
 	}
 
 	print_r($tks);
+
+	echo implode(PHP_EOL, $tks) . PHP_EOL;
