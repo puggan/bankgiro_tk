@@ -5,7 +5,7 @@
 	class Tk implements \IteratorAggregate, \ArrayAccess
 	{
 		private $tk_nr;
-		private $data;
+		private $data = [];
 
 		//<editor-fold desc="Rule Definitions">
 		/** @var  Tk\Rule[][] */
@@ -102,6 +102,10 @@
 
 			$this->tk_nr = $tk_number;
 			$this->data = array_fill_keys(array_keys(self::$tk_definitions[$tk_number]), NULL);
+			foreach(self::$tk_definitions[$tk_number] as $key => $rule)
+			{
+				$this->__set($key, $rule->default);
+			}
 
 			if(is_string($data))
 			{
