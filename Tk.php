@@ -107,12 +107,27 @@
 			{
 				$this->load_from_string($data);
 			}
-			else if($data)
+			else if(is_array($data))
 			{
-				foreach($data as $key => $value)
-				{
-					$this->__set($key, $value);
-				}
+				$this->load($data);
+			}
+		}
+
+		public function load($list) {
+			$rules = self::$tk_definitions[$this->tk_nr];
+			$nr_to_key = [];
+			foreach(array_keys($rules) as $key)
+			{
+				if($key == 'Transaktionskod') continue;
+				$skip_prefix = 'Reservfält_';
+				if(substr($key, 0, strlen($skip_prefix)) == $skip_prefix) continue;
+
+				$nr_to_key[] = $key;
+			}
+
+			foreach($list as $key => $value) {
+				if(isset($nr_to_key[$key])) $key = $nr_to_key[$key];
+				$this->__set($key, $value);
 			}
 		}
 
