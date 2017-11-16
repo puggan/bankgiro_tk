@@ -92,13 +92,13 @@
 				case 'P/Org-nr':
 				case 'N':
 				{
-					return substr(str_repeat('0', $this->length) . $input, -$this->length);
+					return mb_substr(str_repeat('0', $this->length) . $input, -$this->length);
 				}
 
 				case 'A':
 				default:
 				{
-					return substr($input . str_repeat(' ', $this->length), 0, $this->length);
+					return mb_substr($input . str_repeat(' ', $this->length), 0, $this->length);
 				}
 			}
 		}

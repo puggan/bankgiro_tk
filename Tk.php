@@ -114,14 +114,39 @@
 			}
 		}
 
-		public function load_from_string($org_string)
+		public function load_from_string($org_string, $encoding = TRUE)
 		{
 			$rules = self::$tk_definitions[$this->tk_nr];
-			$string = $org_string;
+			if($encoding === TRUE) {
+				$encoding = mb_detect_encoding($org_string, ['ASCII', 'UTF-8', 'ISO-8859-1']);
+			}
+			switch((string) $encoding)
+			{
+				case 'ISO-8859-1':
+				{
+					$string = utf8_encode($org_string);
+					break;
+				}
+
+				case '':
+				case 'ASCII':
+				case 'UTF-8':
+				{
+					$string = $org_string;
+					break;
+				}
+
+				default:
+				{
+					$string = mb_convert_encoding($org_string, 'UTF-8', $encoding);
+					break;
+				}
+			}
+
 			foreach($rules as $key => $rule)
 			{
-				$this->__set($key, substr($string, 0, $rule->length));
-				$string = substr($string, $rule->length);
+				$this->__set($key, mb_substr($string, 0, $rule->length));
+				$string = mb_substr($string, $rule->length);
 			}
 		}
 
