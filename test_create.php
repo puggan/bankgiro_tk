@@ -2,7 +2,7 @@
 
 	date_default_timezone_set(@date_default_timezone_get());
 
-	require_once('autoload.php');
+	require_once(__DIR__ . '/load.php');
 
 	use \Spiro\Puggan\Bankgiro\Tk;
 	use \Spiro\Puggan\Bankgiro;
