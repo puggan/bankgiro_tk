@@ -80,6 +80,7 @@
 			self::$tk_definitions[$tk]['Skrivdag'] = new Tk\Rule('Date', 8);
 			self::$tk_definitions[$tk]['Clearingnummer'] = new Tk\Rule('N', 4, 9900);
 			self::$tk_definitions[$tk]['Antal'] = new Tk\Rule('N', 7);
+			self::$tk_definitions[$tk]['Reservfält_22_80'] = new Tk\Rule('A', 59, '', '/^ *$/');
 			//</editor-fold>
 
 			return self::$tk_definitions;
