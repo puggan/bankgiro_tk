@@ -42,11 +42,11 @@
 			{
 				$tks[] = new Bankgiro\Tk53($customer);
 			}
-			if(isset($customer['rad1']))
+			if(isset($customer['Rad1']))
 			{
 				$tks[] = new Bankgiro\Tk54($customer);
 			}
-			if(isset($customer['rad3']))
+			if(isset($customer['Rad3']))
 			{
 				$tks[] = new Bankgiro\Tk55($customer);
 			}
