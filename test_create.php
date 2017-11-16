@@ -4,14 +4,17 @@
 
 	require_once('Tk/Rule.php');
 	require_once('Tk.php');
-
 	use \Spiro\Puggan\Bankgiro\Tk;
+
+	require_once('Tk56.php');
+	use \Spiro\Puggan\Bankgiro\Tk56;
 
 	$tks = [];
 
 	$tk = new Tk(51, ['Clearingnummer' => 9900, 'Bankgironummer' => 9912346]);
 	$tks[] = $tk;
 
+	/** @var \Spiro\Puggan\Bankgiro\Tk52 $tk */
 	$tk = new Tk(52);
 	$tk->Bankgironummer = 9912346;
 	$tk->Betalarnummer = 10133;
@@ -27,7 +30,7 @@
 	$tks[] = $tk;
 
 	$tks[] = new Tk(55, ['DEMOVÄGEN 1']);
-	$tks[] = new Tk(56, [10000, 'DEMOSTAD']);
+	$tks[] = new Tk56([10000, 'DEMOSTAD']);
 
 	$tks[] = new Tk(59, [NULL, 9900, count($tks) - 1]);
 
