@@ -106,6 +106,19 @@
 					return mb_substr(str_repeat('0', $this->length) . $input, -$this->length);
 				}
 
+				case 'AN':
+				{
+					if(is_numeric(trim($input)))
+					{
+						return mb_substr(str_repeat('0', $this->length) . $input, -$this->length);
+					}
+					else
+					{
+						return mb_substr($input . str_repeat(' ', $this->length), 0, $this->length);
+					}
+
+				}
+
 				case 'A':
 				default:
 				{
