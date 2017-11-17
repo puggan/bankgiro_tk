@@ -134,7 +134,7 @@
 			$rules['Betalningsdag'] = new Rule('A', 8, '', '/^ *$/');
 			$rules['Belopp'] = new Rule('A', 12, '', '/^ *$/');
 			$rules['Betalningskod'] = new Rule('A', 2, '', '/^ *$/');
-			$rules['Reservfält_51_58'] = new Rule('A', 8, '', '/^ *$/');
+			$rules['NyBetalningsdag'] = new Rule('A', 8, '', '/^ *$/');
 			$rules['Referense'] = new Rule('A', 16, '', '/^ *$/');
 			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
 
@@ -154,7 +154,7 @@
 			$rules['Betalningsdag'] = new Rule('Date', 8);
 			$rules['Belopp'] = new Rule('A', 12, '', '/^ *$/');
 			$rules['Betalningskod'] = new Rule('A', 2, '', '/^ *$/');
-			$rules['Reservfält_51_58'] = new Rule('A', 8, '', '/^ *$/');
+			$rules['NyBetalningsdag'] = new Rule('A', 8, '', '/^ *$/');
 			$rules['Referense'] = new Rule('A', 16, '', '/^ *$/');
 			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
 
@@ -174,14 +174,92 @@
 			$rules['Betalningsdag'] = new Rule('Date', 8);
 			$rules['Belopp'] = new Rule('N', 12, 0);
 			$rules['Betalningskod'] = new Rule('N', 2, '', '/^[38]2$/');
-			$rules['Reservfält_51_58'] = new Rule('A', 8, '', '/^ *$/');
+			$rules['NyBetalningsdag'] = new Rule('A', 8, '', '/^ *$/');
 			$rules['Referense'] = new Rule('A', 16);
 			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
 
 			return $rules;
 		}
 
-		// TODO Tk26-29, page 30: Poster för ändring av betalningsdag (TK26, TK27, TK28 och TK29)
+		/**
+		 * Poster för ändring av betalningsdag, alla
+		 */
+		static function tk26()
+		{
+			$tk = 26;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('A', 16, '', '/^ *$/');
+			$rules['Betalningsdag'] = new Rule('A', 8, '', '/^ *$/');
+			$rules['Belopp'] = new Rule('A', 12, '', '/^ *$/');
+			$rules['Betalningskod'] = new Rule('A', 2, '', '/^ *$/');
+			$rules['NyBetalningsdag'] = new Rule('Date', 8);
+			$rules['Referense'] = new Rule('A', 16, '', '/^ *$/');
+			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+
+			return $rules;
+		}
+
+		/**
+		 * Poster för ändring av betalningsdag, alla
+		 */
+		static function tk27()
+		{
+			$tk = 27;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('A', 16, '', '/^ *$/');
+			$rules['Betalningsdag'] = new Rule('Date', 8);
+			$rules['Belopp'] = new Rule('A', 12, '', '/^ *$/');
+			$rules['Betalningskod'] = new Rule('A', 2, '', '/^ *$/');
+			$rules['NyBetalningsdag'] = new Rule('Date', 8);
+			$rules['Referense'] = new Rule('A', 16, '', '/^ *$/');
+			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+
+			return $rules;
+		}
+
+		/**
+		 * Poster för ändring av betalningsdag, alla
+		 */
+		static function tk28()
+		{
+			$tk = 28;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Betalningsdag'] = new Rule('Date', 8);
+			$rules['Belopp'] = new Rule('A', 12, '', '/^ *$/');
+			$rules['Betalningskod'] = new Rule('A', 2, '', '/^ *$/');
+			$rules['NyBetalningsdag'] = new Rule('Date', 8);
+			$rules['Referense'] = new Rule('A', 16, '', '/^ *$/');
+			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+
+			return $rules;
+		}
+
+		/**
+		 * Poster för ändring av betalningsdag, alla
+		 */
+		static function tk29()
+		{
+			$tk = 29;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Betalningsdag'] = new Rule('Date', 8);
+			$rules['Belopp'] = new Rule('N', 12, 0);
+			$rules['Betalningskod'] = new Rule('N', 2, '', '/^[38]2$/');
+			$rules['NyBetalningsdag'] = new Rule('Date', 8);
+			$rules['Referense'] = new Rule('A', 16);
+			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+
+			return $rules;
+		}
 
 		//</editor-fold>
 
