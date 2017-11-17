@@ -4,50 +4,19 @@
 
 	class Tk implements \IteratorAggregate, \ArrayAccess
 	{
-		private $tk_nr;
-		private $data = [];
-
-		//<editor-fold desc="Rule Definitions">
-		/** @var  Tk\Rule[][] */
-		static $tk_definitions;
-
-		static public function load_tk_definitoins()
-		{
-			if(self::$tk_definitions)
-			{
-				return self::$tk_definitions;
-			}
-
-			self::$tk_definitions = [];
-			self::$tk_definitions[51] = Tk\Rulesets::tk51();
-			self::$tk_definitions[52] = Tk\Rulesets::tk52();
-			self::$tk_definitions[53] = Tk\Rulesets::tk53();
-			self::$tk_definitions[54] = Tk\Rulesets::tk54();
-			self::$tk_definitions[55] = Tk\Rulesets::tk55();
-			self::$tk_definitions[56] = Tk\Rulesets::tk56();
-			self::$tk_definitions[59] = Tk\Rulesets::tk59();
-
-			return self::$tk_definitions;
-		}
-		//</editor-fold>
+		private $tk_nr, $rules, $data = [];
 
 		public function __construct($tk_number, $data = null)
 		{
-			self::load_tk_definitoins();
-
 			if(!$data AND is_string($tk_number) AND strlen($tk_number) > 2) {
 				$data = $tk_number;
 				$tk_number = substr($data, 0, 2);
 			}
 
-			if(empty(self::$tk_definitions[$tk_number]))
-			{
-				throw new \Exception("Bad tk-number");
-			}
-
 			$this->tk_nr = $tk_number;
-			$this->data = array_fill_keys(array_keys(self::$tk_definitions[$tk_number]), NULL);
-			foreach(self::$tk_definitions[$tk_number] as $key => $rule)
+			$this->rules = Tk\Rulesets::rules($tk_number);
+			$this->data = array_fill_keys(array_keys($this->rules), NULL);
+			foreach($this->rules as $key => $rule)
 			{
 				$this->__set($key, $rule->default);
 			}
@@ -63,7 +32,7 @@
 		}
 
 		public function load($list) {
-			$rules = self::$tk_definitions[$this->tk_nr];
+			$rules = $this->rules;
 			$nr_to_key = [];
 			foreach(array_keys($rules) as $key)
 			{
@@ -82,7 +51,7 @@
 
 		public function load_from_string($org_string, $encoding = TRUE)
 		{
-			$rules = self::$tk_definitions[$this->tk_nr];
+			$rules = $this->rules;
 			if($encoding === TRUE) {
 				$encoding = mb_detect_encoding($org_string, ['ASCII', 'UTF-8', 'ISO-8859-1']);
 			}
@@ -119,7 +88,7 @@
 		//<editor-fold desc="Getter, Setter, and Strings">
 		public function __get($key)
 		{
-			if(isset(self::$tk_definitions[$this->tk_nr][$key]))
+			if(isset($this->rules[$key]))
 			{
 				return $this->data[$key];
 			}
@@ -128,9 +97,9 @@
 
 		public function __set($key, $value)
 		{
-			if(isset(self::$tk_definitions[$this->tk_nr][$key]))
+			if(isset($this->rules[$key]))
 			{
-				$this->data[$key] = self::$tk_definitions[$this->tk_nr][$key]->clean($value);
+				$this->data[$key] = $this->rules[$key]->clean($value);
 			}
 		}
 
@@ -143,7 +112,7 @@
 		//<editor-fold desc="ArrayAccess wrapers">
 		public function offsetExists($offset)
 		{
-			return isset(self::$tk_definitions[$this->tk_nr][$offset]);
+			return isset($this->rules[$offset]);
 		}
 
 		public function offsetGet($offset)
