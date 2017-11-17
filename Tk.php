@@ -40,15 +40,20 @@
 			}
 		}
 
-		public function load($list) {
-			$rules = $this->rules;
-			$nr_to_key = [];
-			foreach($rules as $key => $rule)
+		public function keys() {
+			$keys = [];
+			foreach($this->rules as $key => $rule)
 			{
 				if($rule instanceof Tk\Rule\Blank) continue;
 
-				$nr_to_key[] = $key;
+				$keys[] = $key;
 			}
+
+			return $keys;
+		}
+
+		public function load($list) {
+			$nr_to_key = $this->keys();
 
 			foreach($list as $key => $value) {
 				if(isset($nr_to_key[$key])) $key = $nr_to_key[$key];
