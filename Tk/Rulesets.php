@@ -36,10 +36,10 @@
 			$rules['Transaktionskod'] = new Rule('N', 2, 1, '/^0?1$/');
 			$rules['Skrivdag'] = new Rule('Date', 8);
 			$rules['Layoutnamn'] = new Rule('A', 8, 'AUTOGIRO', '/^AUTOGIRO$/');
-			$rules['Reservfält_19_62'] = new Rule('A', 44, '', '/^ *$/');
+			$rules['Reservfält_19_62'] = new Rule\Blank(44);
 			$rules['Kundnummer'] = new Rule('N', 6);
 			$rules['Bankgironummer'] = new Rule('N', 10);
-			$rules['Reservfält_79_80'] = new Rule('A', 2, '', '/^ *$/');
+			$rules['Reservfält_79_80'] = new Rule\Blank(2);
 
 			return $rules;
 		}
@@ -53,7 +53,7 @@
 			$rules['Transaktionskod'] = new Rule('N', 2, 3, '/^0?3$/');
 			$rules['Bankgironummer'] = new Rule('N', 10);
 			$rules['Betalarnummer'] = new Rule('N', 16);
-			$rules['Reservfält_29_80'] = new Rule('A', 52, '', '/^ *$/');
+			$rules['Reservfält_29_80'] = new Rule\Blank(52);
 
 			return $rules;
 		}
@@ -69,9 +69,9 @@
 			$rules['Betalarnummer'] = new Rule('N', 16);
 			$rules['Bankkontonummer'] = new Rule('N', 16);
 			$rules['Personnummer'] = new Rule('P/Org-nr', 12);
-			$rules['Reservfält_57_76'] = new Rule('A', 20, '', '/^ *$/');
+			$rules['Reservfält_57_76'] = new Rule\Blank(20);
 			$rules['Nyinlägg'] = new Rule('A', 2, '', '/^( *|AV)$/');
-			$rules['Reservfält_79_80'] = new Rule('A', 2, '', '/^ *$/');
+			$rules['Reservfält_79_80'] = new Rule\Blank(2);
 
 			return $rules;
 		}
@@ -87,7 +87,7 @@
 			$rules['Betalarnummer'] = new Rule('N', 16);
 			$rules['Bankgironummer2'] = new Rule('N', 10);
 			$rules['Betalarnummer2'] = new Rule('N', 16);
-			$rules['Reservfält_55_80'] = new Rule('A', 26, '', '/^ *$/');
+			$rules['Reservfält_55_80'] = new Rule\Blank(26);
 
 			return $rules;
 		}
@@ -107,7 +107,7 @@
 			$rules['Antal32'] = new Rule('N', 12);
 			$rules['AntalÅter'] = new Rule('N', 6);
 			$rules['Antal77'] = new Rule('N', 12);
-			$rules['Reservfält_69_80'] = new Rule('A', 12, '', '/^ *$/');
+			$rules['Reservfält_69_80'] = new Rule\Blank(12);
 
 			return $rules;
 		}
@@ -131,12 +131,12 @@
 			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
 			$rules['Bankgironummer'] = new Rule('N', 10);
 			$rules['Betalarnummer'] = new Rule('N', 16);
-			$rules['Betalningsdag'] = new Rule('A', 8, '', '/^ *$/');
-			$rules['Belopp'] = new Rule('A', 12, '', '/^ *$/');
-			$rules['Betalningskod'] = new Rule('A', 2, '', '/^ *$/');
-			$rules['NyBetalningsdag'] = new Rule('A', 8, '', '/^ *$/');
-			$rules['Referense'] = new Rule('A', 16, '', '/^ *$/');
-			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+			$rules['Betalningsdag'] = new Rule\Blank(8);
+			$rules['Belopp'] = new Rule\Blank(12);
+			$rules['Betalningskod'] = new Rule\Blank(2);
+			$rules['NyBetalningsdag'] = new Rule\Blank(8);
+			$rules['Referense'] = new Rule\Blank(16);
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
 
 			return $rules;
 		}
@@ -152,11 +152,11 @@
 			$rules['Bankgironummer'] = new Rule('N', 10);
 			$rules['Betalarnummer'] = new Rule('N', 16);
 			$rules['Betalningsdag'] = new Rule('Date', 8);
-			$rules['Belopp'] = new Rule('A', 12, '', '/^ *$/');
-			$rules['Betalningskod'] = new Rule('A', 2, '', '/^ *$/');
-			$rules['NyBetalningsdag'] = new Rule('A', 8, '', '/^ *$/');
-			$rules['Referense'] = new Rule('A', 16, '', '/^ *$/');
-			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+			$rules['Belopp'] = new Rule\Blank(12);
+			$rules['Betalningskod'] = new Rule\Blank(2);
+			$rules['NyBetalningsdag'] = new Rule\Blank(8);
+			$rules['Referense'] = new Rule\Blank(16);
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
 
 			return $rules;
 		}
@@ -174,9 +174,9 @@
 			$rules['Betalningsdag'] = new Rule('Date', 8);
 			$rules['Belopp'] = new Rule('N', 12, 0);
 			$rules['Betalningskod'] = new Rule('N', 2, '', '/^[38]2$/');
-			$rules['NyBetalningsdag'] = new Rule('A', 8, '', '/^ *$/');
+			$rules['NyBetalningsdag'] = new Rule\Blank(8);
 			$rules['Referense'] = new Rule('A', 16);
-			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
 
 			return $rules;
 		}
@@ -190,13 +190,13 @@
 			$rules = [];
 			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
 			$rules['Bankgironummer'] = new Rule('N', 10);
-			$rules['Betalarnummer'] = new Rule('A', 16, '', '/^ *$/');
-			$rules['Betalningsdag'] = new Rule('A', 8, '', '/^ *$/');
-			$rules['Belopp'] = new Rule('A', 12, '', '/^ *$/');
-			$rules['Betalningskod'] = new Rule('A', 2, '', '/^ *$/');
+			$rules['Betalarnummer'] = new Rule\Blank(16);
+			$rules['Betalningsdag'] = new Rule\Blank(8);
+			$rules['Belopp'] = new Rule\Blank(12);
+			$rules['Betalningskod'] = new Rule\Blank(2);
 			$rules['NyBetalningsdag'] = new Rule('Date', 8);
-			$rules['Referense'] = new Rule('A', 16, '', '/^ *$/');
-			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+			$rules['Referense'] = new Rule\Blank(16);
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
 
 			return $rules;
 		}
@@ -210,13 +210,13 @@
 			$rules = [];
 			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
 			$rules['Bankgironummer'] = new Rule('N', 10);
-			$rules['Betalarnummer'] = new Rule('A', 16, '', '/^ *$/');
+			$rules['Betalarnummer'] = new Rule\Blank(16);
 			$rules['Betalningsdag'] = new Rule('Date', 8);
-			$rules['Belopp'] = new Rule('A', 12, '', '/^ *$/');
-			$rules['Betalningskod'] = new Rule('A', 2, '', '/^ *$/');
+			$rules['Belopp'] = new Rule\Blank(12);
+			$rules['Betalningskod'] = new Rule\Blank(2);
 			$rules['NyBetalningsdag'] = new Rule('Date', 8);
-			$rules['Referense'] = new Rule('A', 16, '', '/^ *$/');
-			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+			$rules['Referense'] = new Rule\Blank(16);
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
 
 			return $rules;
 		}
@@ -232,11 +232,11 @@
 			$rules['Bankgironummer'] = new Rule('N', 10);
 			$rules['Betalarnummer'] = new Rule('N', 16);
 			$rules['Betalningsdag'] = new Rule('Date', 8);
-			$rules['Belopp'] = new Rule('A', 12, '', '/^ *$/');
-			$rules['Betalningskod'] = new Rule('A', 2, '', '/^ *$/');
+			$rules['Belopp'] = new Rule\Blank(12);
+			$rules['Betalningskod'] = new Rule\Blank(2);
 			$rules['NyBetalningsdag'] = new Rule('Date', 8);
-			$rules['Referense'] = new Rule('A', 16, '', '/^ *$/');
-			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+			$rules['Referense'] = new Rule\Blank(16);
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
 
 			return $rules;
 		}
@@ -256,7 +256,7 @@
 			$rules['Betalningskod'] = new Rule('N', 2, '', '/^[38]2$/');
 			$rules['NyBetalningsdag'] = new Rule('Date', 8);
 			$rules['Referense'] = new Rule('A', 16);
-			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
 
 			return $rules;
 		}
@@ -280,7 +280,7 @@
 			$rules['Belopp'] = new Rule('N', 12);
 			$rules['Bankgironummer'] = new Rule('N', 10);
 			$rules['Referense'] = new Rule('A', 16);
-			$rules['Reservfält_70_80'] = new Rule('A', 11, '', '/^ *$/');
+			$rules['Reservfält_70_80'] = new Rule\Blank(11);
 
 			return $rules;
 		}
@@ -300,7 +300,7 @@
 			$rules['Clearingnummer'] = new Rule('N', 4, 9900);
 			$rules['Bankgironummer'] = new Rule('N', 10);
 			$rules['Innehåll'] = new Rule('A', 20, 'AG-EMEDGIV', '/^AG-EMEDGIV$/');
-			$rules['Reservfält_45_80'] = new Rule('A', 36, '', '/^ *$/');
+			$rules['Reservfält_45_80'] = new Rule\Blank(36);
 
 			return $rules;
 		}
@@ -317,9 +317,9 @@
 			$rules['Betalarnummer'] = new Rule('N', 16);
 			$rules['Bankkontonummer'] = new Rule('N', 16);
 			$rules['Personnummer'] = new Rule('P/Org-nr', 12);
-			$rules['Reservfält_57_61'] = new Rule('A', 5, '', '/^ *$/');
+			$rules['Reservfält_57_61'] = new Rule\Blank(5);
 			$rules['Meddelandetyp'] = new Rule('N', 1, 0, '/^[0-2]$/');
-			$rules['Reservfält_63_80'] = new Rule('A', 18, '', '/^ *$/');
+			$rules['Reservfält_63_80'] = new Rule\Blank(18);
 
 			return $rules;
 		}
@@ -333,7 +333,7 @@
 			$rules = [];
 			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
 			$rules['Information'] = new Rule('A', 36, '');
-			$rules['Reservfält_39_80'] = new Rule('A', 42, '', '/^ *$/');
+			$rules['Reservfält_39_80'] = new Rule\Blank(42);
 
 			return $rules;
 		}
@@ -348,7 +348,7 @@
 			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
 			$rules['Rad1'] = new Rule('A', 36, '');
 			$rules['Rad2'] = new Rule('A', 36, '');
-			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
 
 			return $rules;
 		}
@@ -363,7 +363,7 @@
 			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
 			$rules['Rad3'] = new Rule('A', 36, '');
 			$rules['Rad4'] = new Rule('A', 36, '');
-			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
 
 			return $rules;
 		}
@@ -378,7 +378,7 @@
 			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
 			$rules['Postnummer'] = new Rule('N', 5);
 			$rules['Postadress'] = new Rule('A', 31);
-			$rules['Reservfält_39_80'] = new Rule('A', 42, '', '/^ *$/');
+			$rules['Reservfält_39_80'] = new Rule\Blank(42);
 
 			return $rules;
 		}
@@ -394,7 +394,7 @@
 			$rules['Skrivdag'] = new Rule('Date', 8);
 			$rules['Clearingnummer'] = new Rule('N', 4, 9900);
 			$rules['Antal'] = new Rule('N', 7);
-			$rules['Reservfält_22_80'] = new Rule('A', 59, '', '/^ *$/');
+			$rules['Reservfält_22_80'] = new Rule\Blank(59);
 
 			return $rules;
 		}
@@ -422,7 +422,7 @@
 			$rules['Belopp'] = new Rule('N', 12);
 			$rules['Bankgironummer'] = new Rule('N', 10);
 			$rules['Referense'] = new Rule('A', 16);
-			$rules['Reservfält_70_80'] = new Rule('A', 11, '', '/^ *$/');
+			$rules['Reservfält_70_80'] = new Rule\Blank(11);
 
 			return $rules;
 		}
