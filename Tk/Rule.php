@@ -8,6 +8,17 @@
 
 	namespace Spiro\Puggan\Bankgiro\Tk;
 
+	/**
+	 * Class Rule
+	 * Deinfiton, validation, and cleaning up TK fileds
+	 *
+	 * @package Spiro\Puggan\Bankgiro\Tk
+	 *
+	 * @property string enum N: numeric, A: alfanumeric, Date, P/Org-nr
+	 * @property int length of filed
+	 * @property string default value to use if not spicifed
+	 * @property string validation
+	 */
 	class Rule
 	{
 		public $type, $length, $default, $regexp;
