@@ -2,6 +2,15 @@
 
 	namespace Spiro\Puggan\Bankgiro;
 
+	/**
+	 * Class Tk
+	 * Generic definition of a TK-row
+	 * @package Spiro\Puggan\Bankgiro
+	 *
+	 * @property int tk_nr
+	 * @property Tk\Rule[] rules
+	 * @property string[] data
+	 */
 	class Tk implements \IteratorAggregate, \ArrayAccess
 	{
 		private $tk_nr, $rules, $data = [];
