@@ -18,13 +18,82 @@
 	{
 		static function rules($tk_number)
 		{
-			$method = 'tk' . $tk_number;
+			$method = sprintf("tk%02d", $tk_number);
 			if(method_exists(self::class, $method))
 			{
 				return self::$method();
 			}
 			throw new \Exception("Unknown TK " . $tk_number);
 		}
+
+		//<editor-fold desc="tk0x">
+		/**
+		 * Öppningspost
+		 */
+		static function tk01()
+		{
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, 1, '/^0?1$/');
+			$rules['Skrivdag'] = new Rule('Date', 8);
+			$rules['Layoutnamn'] = new Rule('A', 8, 'AUTOGIRO', '/^AUTOGIRO$/');
+			$rules['Reservfält_19_62'] = new Rule('A', 44, '', '/^ *$/');
+			$rules['Kundnummer'] = new Rule('N', 6);
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Reservfält_79_80'] = new Rule('A', 2, '', '/^ *$/');
+
+			return $rules;
+		}
+
+		/**
+		 * Post för makulering av Medgivande
+		 */
+		static function tk03()
+		{
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, 3, '/^0?3$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Reservfält_29_80'] = new Rule('A', 52, '', '/^ *$/');
+
+			return $rules;
+		}
+
+		/**
+		 * Post för nyinlägg och godkännande/avvisande av Medgivanden via Internetbanken
+		 */
+		static function tk04()
+		{
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, 4, '/^0?4$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Bankkontonummer'] = new Rule('N', 16);
+			$rules['Personnummer'] = new Rule('P/Org-nr', 12);
+			$rules['Reservfält_57_76'] = new Rule('A', 20, '', '/^ *$/');
+			$rules['Nyinlägg'] = new Rule('A', 2, '', '/^( *|AV)$/');
+			$rules['Reservfält_79_80'] = new Rule('A', 2, '', '/^ *$/');
+
+			return $rules;
+		}
+
+		/**
+		 * Post för byte av betalarnummer
+		 */
+		static function tk05()
+		{
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, 5, '/^0?5$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Bankgironummer2'] = new Rule('N', 10);
+			$rules['Betalarnummer2'] = new Rule('N', 16);
+			$rules['Reservfält_55_80'] = new Rule('A', 26, '', '/^ *$/');
+
+			return $rules;
+		}
+		//</editor-fold>
+
+		//<editor-fold desc="tk5x">
 
 		/**
 		 * Öppningspost
@@ -136,4 +205,5 @@
 
 			return $rules;
 		}
+		//</editor-fold>
 	}
