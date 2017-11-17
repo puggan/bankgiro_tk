@@ -92,7 +92,25 @@
 			return $rules;
 		}
 
-		// TODO Tk09, page 41: Slutpost
+		/**
+		 * Slutpost
+		 */
+		static function tk09()
+		{
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, 9, '/^0?9$/');
+			$rules['Skrivdag'] = new Rule('Date', 8);
+			$rules['Clearingnummer'] = new Rule('N', 4, 9900);
+			$rules['AntalIn'] = new Rule('N', 6);
+			$rules['Antal82'] = new Rule('N', 12);
+			$rules['AntalUt'] = new Rule('N', 6);
+			$rules['Antal32'] = new Rule('N', 12);
+			$rules['AntalÅter'] = new Rule('N', 6);
+			$rules['Antal77'] = new Rule('N', 12);
+			$rules['Reservfält_69_80'] = new Rule('A', 12, '', '/^ *$/');
+
+			return $rules;
+		}
 		//</editor-fold>
 
 		//<editor-fold desc="tk1x">
