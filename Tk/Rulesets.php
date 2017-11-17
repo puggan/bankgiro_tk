@@ -10,7 +10,7 @@
 
 	class Rulesets
 	{
-		static function tkRules($tk_number)
+		static function rules($tk_number)
 		{
 			$method = 'tk' . $tk_number;
 			if(method_exists(self::class, $method))
