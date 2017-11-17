@@ -91,6 +91,15 @@
 
 			return $rules;
 		}
+
+		// TODO Tk09, page 41: Slutpost
+		//</editor-fold>
+
+		//<editor-fold desc="tk1x">
+		// TODO Tk11, page 54: Makuleringspost
+		// TODO Tk15, page 35: Insättningspost
+		// TODO Tk16, page 37: Uttagspost
+		// TODO Tk17, page 40: Uttagspost för Återbetalning
 		//</editor-fold>
 
 		//<editor-fold desc="tk2x">
@@ -154,6 +163,11 @@
 			return $rules;
 		}
 
+		// TODO Tk26-29, page 30: Poster för ändring av betalningsdag (TK26, TK27, TK28 och TK29)
+
+		//</editor-fold>
+
+		//<editor-fold desc="tk3x">
 		//</editor-fold>
 
 		//<editor-fold desc="tk5x">
@@ -270,6 +284,11 @@
 		}
 		//</editor-fold>
 
+		//<editor-fold desc="tk7x">
+		// TODO Tk73, page 45: Post för nyinlägg och makulering av Medgivanden
+		// TODO Tk77, page 40: Betalningspost för Återbetalning
+		//</editor-fold>
+
 		/**
 		 * Utbetalningspost
 		 */
@@ -291,6 +310,7 @@
 			return $rules;
 		}
 
+		//<editor-fold desc="tk8x">
 		/**
 		 * Inbetalningspost
 		 */
@@ -311,4 +331,5 @@
 
 			return $rules;
 		}
+		//</editor-fold>
 	}
