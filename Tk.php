@@ -43,11 +43,9 @@
 		public function load($list) {
 			$rules = $this->rules;
 			$nr_to_key = [];
-			foreach(array_keys($rules) as $key)
+			foreach($rules as $key => $rule)
 			{
-				if($key == 'Transaktionskod') continue;
-				$skip_prefix = 'Reservfält_';
-				if(substr($key, 0, strlen($skip_prefix)) == $skip_prefix) continue;
+				if($rule instanceof Tk\Rule\Blank) continue;
 
 				$nr_to_key[] = $key;
 			}
