@@ -19,69 +19,13 @@
 			}
 
 			self::$tk_definitions = [];
-
-			//<editor-fold desc="Öppningspost (TK51)">
-			$tk = 51;
-			// Required: Bankgironummer
-			self::$tk_definitions[$tk]['Transaktionskod'] = new Tk\Rule('N', 2, $tk, '/^' . $tk . '$/');
-			self::$tk_definitions[$tk]['Skrivdag'] = new Tk\Rule('Date', 8);
-			self::$tk_definitions[$tk]['Clearingnummer'] = new Tk\Rule('N', 4, 9900);
-			self::$tk_definitions[$tk]['Bankgironummer'] = new Tk\Rule('N', 10);
-			self::$tk_definitions[$tk]['Innehåll'] = new Tk\Rule('A', 20, 'AG-EMEDGIV','/^AG-EMEDGIV$/');
-			self::$tk_definitions[$tk]['Reservfält_45_80'] = new Tk\Rule('A', 36, '', '/^ *$/');
-			//</editor-fold>
-
-			//<editor-fold desc="Medgivande post 1 (TK52)">
-			$tk = 52;
-			self::$tk_definitions[$tk]['Transaktionskod'] = new Tk\Rule('N', 2, $tk, '/^' . $tk . '$/');
-			self::$tk_definitions[$tk]['Bankgironummer'] = new Tk\Rule('N', 10);
-			self::$tk_definitions[$tk]['Betalarnummer'] = new Tk\Rule('N', 16);
-			self::$tk_definitions[$tk]['Bankkontonummer'] = new Tk\Rule('N', 16);
-			self::$tk_definitions[$tk]['Personnummer'] = new Tk\Rule('P/Org-nr', 12);
-			self::$tk_definitions[$tk]['Reservfält_57_61'] = new Tk\Rule('A', 5, '', '/^ *$/');
-			self::$tk_definitions[$tk]['Meddelandetyp'] = new Tk\Rule('N', 1, 0, '/^[0-2]$/');
-			self::$tk_definitions[$tk]['Reservfält_63_80'] = new Tk\Rule('A', 18, '', '/^ *$/');
-			//</editor-fold>
-
-			//<editor-fold desc="Medgivande post, särskild information (TK53)">
-			$tk = 53;
-			self::$tk_definitions[$tk]['Transaktionskod'] = new Tk\Rule('N', 2, $tk, '/^' . $tk . '$/');
-			self::$tk_definitions[$tk]['Information'] = new Tk\Rule('A', 36, '');
-			self::$tk_definitions[$tk]['Reservfält_39_80'] = new Tk\Rule('A', 42, '', '/^ *$/');
-			//</editor-fold>
-
-			//<editor-fold desc="Medgivandepost, namn och adressdel 1 (TK54)">
-			$tk = 54;
-			self::$tk_definitions[$tk]['Transaktionskod'] = new Tk\Rule('N', 2, $tk, '/^' . $tk . '$/');
-			self::$tk_definitions[$tk]['Rad1'] = new Tk\Rule('A', 36, '');
-			self::$tk_definitions[$tk]['Rad2'] = new Tk\Rule('A', 36, '');
-			self::$tk_definitions[$tk]['Reservfält_75_80'] = new Tk\Rule('A', 6, '', '/^ *$/');
-			//</editor-fold>
-
-			//<editor-fold desc="Medgivandepost, namn och adressdel 2 (TK55)">
-			$tk = 55;
-			self::$tk_definitions[$tk]['Transaktionskod'] = new Tk\Rule('N', 2, $tk, '/^' . $tk . '$/');
-			self::$tk_definitions[$tk]['Rad3'] = new Tk\Rule('A', 36, '');
-			self::$tk_definitions[$tk]['Rad4'] = new Tk\Rule('A', 36, '');
-			self::$tk_definitions[$tk]['Reservfält_75_80'] = new Tk\Rule('A', 6, '', '/^ *$/');
-			//</editor-fold>
-
-			//<editor-fold desc="Medgivandepost, namn och adressdel 3 (TK56)">
-			$tk = 56;
-			self::$tk_definitions[$tk]['Transaktionskod'] = new Tk\Rule('N', 2, $tk, '/^' . $tk . '$/');
-			self::$tk_definitions[$tk]['Postnummer'] = new Tk\Rule('N', 5);
-			self::$tk_definitions[$tk]['Postadress'] = new Tk\Rule('A', 31);
-			self::$tk_definitions[$tk]['Reservfält_39_80'] = new Tk\Rule('A', 42, '', '/^ *$/');
-			//</editor-fold>
-
-			//<editor-fold desc="Slutpost (TK59)">
-			$tk = 59;
-			self::$tk_definitions[$tk]['Transaktionskod'] = new Tk\Rule('N', 2, $tk, '/^' . $tk . '$/');
-			self::$tk_definitions[$tk]['Skrivdag'] = new Tk\Rule('Date', 8);
-			self::$tk_definitions[$tk]['Clearingnummer'] = new Tk\Rule('N', 4, 9900);
-			self::$tk_definitions[$tk]['Antal'] = new Tk\Rule('N', 7);
-			self::$tk_definitions[$tk]['Reservfält_22_80'] = new Tk\Rule('A', 59, '', '/^ *$/');
-			//</editor-fold>
+			self::$tk_definitions[51] = Tk\Rulesets::tk51();
+			self::$tk_definitions[52] = Tk\Rulesets::tk52();
+			self::$tk_definitions[53] = Tk\Rulesets::tk53();
+			self::$tk_definitions[54] = Tk\Rulesets::tk54();
+			self::$tk_definitions[55] = Tk\Rulesets::tk55();
+			self::$tk_definitions[56] = Tk\Rulesets::tk56();
+			self::$tk_definitions[59] = Tk\Rulesets::tk59();
 
 			return self::$tk_definitions;
 		}

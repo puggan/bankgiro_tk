@@ -1,6 +1,7 @@
 <?php
 	// Version: 0.1
 	require_once __DIR__ . "/Tk/Rule.php";
+	require_once __DIR__ . "/Tk/Rulesets.php";
 	require_once __DIR__ . "/Tk.php";
 	require_once __DIR__ . "/Tk52.php";
 	require_once __DIR__ . "/Tk53.php";
