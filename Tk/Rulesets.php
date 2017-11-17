@@ -8,6 +8,12 @@
 
 	namespace Spiro\Puggan\Bankgiro\Tk;
 
+	/**
+	 * Class Rulesets
+	 * @package Spiro\Puggan\Bankgiro\Tk
+	 *
+	 * @see https://www.bankgirot.se/globalassets/dokument/tekniska-manualer/autogiro_tekniskmanual_sv.pdf
+	 */
 	class Rulesets
 	{
 		static function rules($tk_number)
