@@ -168,6 +168,26 @@
 		//</editor-fold>
 
 		//<editor-fold desc="tk3x">
+		/**
+		 * Utbetalningspost
+		 */
+		static function tk32()
+		{
+			$tk = 32;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Betalningsdag'] = new Rule('AN', 8, 'GENAST', '/^(GENAST *|[0-9]{4}[0-1][0-9][0-3][0-9])$/');
+			$rules['Periodkod'] = new Rule('N', 1, 0, '/^[0-8]$/');
+			$rules['Antal'] = new Rule('AN', 3, '', '/^( *|[0-9]+)$/');
+			$rules['Reservfält_15'] = new Rule('A', 1, '', '/^ ?$/');
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Belopp'] = new Rule('N', 12);
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Referense'] = new Rule('A', 16);
+			$rules['Reservfält_70_80'] = new Rule('A', 11, '', '/^ *$/');
+
+			return $rules;
+		}
 		//</editor-fold>
 
 		//<editor-fold desc="tk5x">
@@ -288,27 +308,6 @@
 		// TODO Tk73, page 45: Post för nyinlägg och makulering av Medgivanden
 		// TODO Tk77, page 40: Betalningspost för Återbetalning
 		//</editor-fold>
-
-		/**
-		 * Utbetalningspost
-		 */
-		static function tk32()
-		{
-			$tk = 32;
-			$rules = [];
-			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
-			$rules['Betalningsdag'] = new Rule('AN', 8, 'GENAST', '/^(GENAST *|[0-9]{4}[0-1][0-9][0-3][0-9])$/');
-			$rules['Periodkod'] = new Rule('N', 1, 0, '/^[0-8]$/');
-			$rules['Antal'] = new Rule('AN', 3, '', '/^( *|[0-9]+)$/');
-			$rules['Reservfält_15'] = new Rule('A', 1, '', '/^ ?$/');
-			$rules['Betalarnummer'] = new Rule('N', 16);
-			$rules['Belopp'] = new Rule('N', 12);
-			$rules['Bankgironummer'] = new Rule('N', 10);
-			$rules['Referense'] = new Rule('A', 16);
-			$rules['Reservfält_70_80'] = new Rule('A', 11, '', '/^ *$/');
-
-			return $rules;
-		}
 
 		//<editor-fold desc="tk8x">
 		/**
