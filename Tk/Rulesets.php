@@ -8,17 +8,285 @@
 
 	namespace Spiro\Puggan\Bankgiro\Tk;
 
+	/**
+	 * Class Rulesets
+	 * @package Spiro\Puggan\Bankgiro\Tk
+	 *
+	 * @see https://www.bankgirot.se/globalassets/dokument/tekniska-manualer/autogiro_tekniskmanual_sv.pdf
+	 */
 	class Rulesets
 	{
 		static function rules($tk_number)
 		{
-			$method = 'tk' . $tk_number;
+			$method = sprintf("tk%02d", $tk_number);
 			if(method_exists(self::class, $method))
 			{
 				return self::$method();
 			}
 			throw new \Exception("Unknown TK " . $tk_number);
 		}
+
+		//<editor-fold desc="tk0x">
+		/**
+		 * Öppningspost
+		 */
+		static function tk01()
+		{
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, 1, '/^0?1$/');
+			$rules['Skrivdag'] = new Rule('Date', 8);
+			$rules['Layoutnamn'] = new Rule('A', 8, 'AUTOGIRO', '/^AUTOGIRO$/');
+			$rules['Reservfält_19_62'] = new Rule\Blank(44);
+			$rules['Kundnummer'] = new Rule('N', 6);
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Reservfält_79_80'] = new Rule\Blank(2);
+
+			return $rules;
+		}
+
+		/**
+		 * Post för makulering av Medgivande
+		 */
+		static function tk03()
+		{
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, 3, '/^0?3$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Reservfält_29_80'] = new Rule\Blank(52);
+
+			return $rules;
+		}
+
+		/**
+		 * Post för nyinlägg och godkännande/avvisande av Medgivanden via Internetbanken
+		 */
+		static function tk04()
+		{
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, 4, '/^0?4$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Bankkontonummer'] = new Rule('N', 16);
+			$rules['Personnummer'] = new Rule('P/Org-nr', 12);
+			$rules['Reservfält_57_76'] = new Rule\Blank(20);
+			$rules['Nyinlägg'] = new Rule('A', 2, '', '/^( *|AV)$/');
+			$rules['Reservfält_79_80'] = new Rule\Blank(2);
+
+			return $rules;
+		}
+
+		/**
+		 * Post för byte av betalarnummer
+		 */
+		static function tk05()
+		{
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, 5, '/^0?5$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Bankgironummer2'] = new Rule('N', 10);
+			$rules['Betalarnummer2'] = new Rule('N', 16);
+			$rules['Reservfält_55_80'] = new Rule\Blank(26);
+
+			return $rules;
+		}
+
+		/**
+		 * Slutpost
+		 */
+		static function tk09()
+		{
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, 9, '/^0?9$/');
+			$rules['Skrivdag'] = new Rule('Date', 8);
+			$rules['Clearingnummer'] = new Rule('N', 4, 9900);
+			$rules['AntalIn'] = new Rule('N', 6);
+			$rules['Antal82'] = new Rule('N', 12);
+			$rules['AntalUt'] = new Rule('N', 6);
+			$rules['Antal32'] = new Rule('N', 12);
+			$rules['AntalÅter'] = new Rule('N', 6);
+			$rules['Antal77'] = new Rule('N', 12);
+			$rules['Reservfält_69_80'] = new Rule\Blank(12);
+
+			return $rules;
+		}
+		//</editor-fold>
+
+		//<editor-fold desc="tk1x">
+		// TODO Tk11, page 54: Makuleringspost
+		// TODO Tk15, page 35: Insättningspost
+		// TODO Tk16, page 37: Uttagspost
+		// TODO Tk17, page 40: Uttagspost för Återbetalning
+		//</editor-fold>
+
+		//<editor-fold desc="tk2x">
+		/**
+		 * Makuleringspost, alla betalningar oavsätt dag
+		 */
+		static function tk23()
+		{
+			$tk = 23;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Betalningsdag'] = new Rule\Blank(8);
+			$rules['Belopp'] = new Rule\Blank(12);
+			$rules['Betalningskod'] = new Rule\Blank(2);
+			$rules['NyBetalningsdag'] = new Rule\Blank(8);
+			$rules['Referense'] = new Rule\Blank(16);
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
+
+			return $rules;
+		}
+
+		/**
+		 * Makuleringspost, alla betalningar en dag
+		 */
+		static function tk24()
+		{
+			$tk = 24;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Betalningsdag'] = new Rule('Date', 8);
+			$rules['Belopp'] = new Rule\Blank(12);
+			$rules['Betalningskod'] = new Rule\Blank(2);
+			$rules['NyBetalningsdag'] = new Rule\Blank(8);
+			$rules['Referense'] = new Rule\Blank(16);
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
+
+			return $rules;
+		}
+
+		/**
+		 * Makuleringspost, en betalning
+		 */
+		static function tk25()
+		{
+			$tk = 25;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Betalningsdag'] = new Rule('Date', 8);
+			$rules['Belopp'] = new Rule('N', 12, 0);
+			$rules['Betalningskod'] = new Rule('N', 2, '', '/^[38]2$/');
+			$rules['NyBetalningsdag'] = new Rule\Blank(8);
+			$rules['Referense'] = new Rule('A', 16);
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
+
+			return $rules;
+		}
+
+		/**
+		 * Poster för ändring av betalningsdag, alla
+		 */
+		static function tk26()
+		{
+			$tk = 26;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule\Blank(16);
+			$rules['Betalningsdag'] = new Rule\Blank(8);
+			$rules['Belopp'] = new Rule\Blank(12);
+			$rules['Betalningskod'] = new Rule\Blank(2);
+			$rules['NyBetalningsdag'] = new Rule('Date', 8);
+			$rules['Referense'] = new Rule\Blank(16);
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
+
+			return $rules;
+		}
+
+		/**
+		 * Poster för ändring av betalningsdag, alla
+		 */
+		static function tk27()
+		{
+			$tk = 27;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule\Blank(16);
+			$rules['Betalningsdag'] = new Rule('Date', 8);
+			$rules['Belopp'] = new Rule\Blank(12);
+			$rules['Betalningskod'] = new Rule\Blank(2);
+			$rules['NyBetalningsdag'] = new Rule('Date', 8);
+			$rules['Referense'] = new Rule\Blank(16);
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
+
+			return $rules;
+		}
+
+		/**
+		 * Poster för ändring av betalningsdag, alla
+		 */
+		static function tk28()
+		{
+			$tk = 28;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Betalningsdag'] = new Rule('Date', 8);
+			$rules['Belopp'] = new Rule\Blank(12);
+			$rules['Betalningskod'] = new Rule\Blank(2);
+			$rules['NyBetalningsdag'] = new Rule('Date', 8);
+			$rules['Referense'] = new Rule\Blank(16);
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
+
+			return $rules;
+		}
+
+		/**
+		 * Poster för ändring av betalningsdag, alla
+		 */
+		static function tk29()
+		{
+			$tk = 29;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Betalningsdag'] = new Rule('Date', 8);
+			$rules['Belopp'] = new Rule('N', 12, 0);
+			$rules['Betalningskod'] = new Rule('N', 2, '', '/^[38]2$/');
+			$rules['NyBetalningsdag'] = new Rule('Date', 8);
+			$rules['Referense'] = new Rule('A', 16);
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
+
+			return $rules;
+		}
+
+		//</editor-fold>
+
+		//<editor-fold desc="tk3x">
+		/**
+		 * Utbetalningspost
+		 */
+		static function tk32()
+		{
+			$tk = 32;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Betalningsdag'] = new Rule('AN', 8, 'GENAST', '/^(GENAST *|[0-9]{4}[0-1][0-9][0-3][0-9])$/');
+			$rules['Periodkod'] = new Rule('N', 1, 0, '/^[0-8]$/');
+			$rules['Antal'] = new Rule('AN', 3, '', '/^( *|[0-9]+)$/');
+			$rules['Reservfält_15'] = new Rule('A', 1, '', '/^ ?$/');
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Belopp'] = new Rule('N', 12);
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Referense'] = new Rule('A', 16);
+			$rules['Reservfält_70_80'] = new Rule\Blank(11);
+
+			return $rules;
+		}
+		//</editor-fold>
+
+		//<editor-fold desc="tk5x">
 
 		/**
 		 * Öppningspost
@@ -32,7 +300,7 @@
 			$rules['Clearingnummer'] = new Rule('N', 4, 9900);
 			$rules['Bankgironummer'] = new Rule('N', 10);
 			$rules['Innehåll'] = new Rule('A', 20, 'AG-EMEDGIV', '/^AG-EMEDGIV$/');
-			$rules['Reservfält_45_80'] = new Rule('A', 36, '', '/^ *$/');
+			$rules['Reservfält_45_80'] = new Rule\Blank(36);
 
 			return $rules;
 		}
@@ -49,9 +317,9 @@
 			$rules['Betalarnummer'] = new Rule('N', 16);
 			$rules['Bankkontonummer'] = new Rule('N', 16);
 			$rules['Personnummer'] = new Rule('P/Org-nr', 12);
-			$rules['Reservfält_57_61'] = new Rule('A', 5, '', '/^ *$/');
+			$rules['Reservfält_57_61'] = new Rule\Blank(5);
 			$rules['Meddelandetyp'] = new Rule('N', 1, 0, '/^[0-2]$/');
-			$rules['Reservfält_63_80'] = new Rule('A', 18, '', '/^ *$/');
+			$rules['Reservfält_63_80'] = new Rule\Blank(18);
 
 			return $rules;
 		}
@@ -65,7 +333,7 @@
 			$rules = [];
 			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
 			$rules['Information'] = new Rule('A', 36, '');
-			$rules['Reservfält_39_80'] = new Rule('A', 42, '', '/^ *$/');
+			$rules['Reservfält_39_80'] = new Rule\Blank(42);
 
 			return $rules;
 		}
@@ -80,7 +348,7 @@
 			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
 			$rules['Rad1'] = new Rule('A', 36, '');
 			$rules['Rad2'] = new Rule('A', 36, '');
-			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
 
 			return $rules;
 		}
@@ -95,7 +363,7 @@
 			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
 			$rules['Rad3'] = new Rule('A', 36, '');
 			$rules['Rad4'] = new Rule('A', 36, '');
-			$rules['Reservfält_75_80'] = new Rule('A', 6, '', '/^ *$/');
+			$rules['Reservfält_75_80'] = new Rule\Blank(6);
 
 			return $rules;
 		}
@@ -110,7 +378,7 @@
 			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
 			$rules['Postnummer'] = new Rule('N', 5);
 			$rules['Postadress'] = new Rule('A', 31);
-			$rules['Reservfält_39_80'] = new Rule('A', 42, '', '/^ *$/');
+			$rules['Reservfält_39_80'] = new Rule\Blank(42);
 
 			return $rules;
 		}
@@ -126,8 +394,61 @@
 			$rules['Skrivdag'] = new Rule('Date', 8);
 			$rules['Clearingnummer'] = new Rule('N', 4, 9900);
 			$rules['Antal'] = new Rule('N', 7);
-			$rules['Reservfält_22_80'] = new Rule('A', 59, '', '/^ *$/');
+			$rules['Reservfält_22_80'] = new Rule\Blank(59);
 
 			return $rules;
 		}
+		//</editor-fold>
+
+		//<editor-fold desc="tk7x">
+		// TODO Tk73, page 45: Post för nyinlägg och makulering av Medgivanden
+		// TODO Tk77, page 40: Betalningspost för Återbetalning
+		/**
+		 * Betalningspost för Återbetalning
+		 */
+		static function tk77()
+		{
+			$tk = 77;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Betalningsdag'] = new Rule('Date', 8);
+			$rules['Periodkod'] = new Rule('N', 1, 0, '/^[0-8]$/');
+			$rules['Antal'] = new Rule('AN', 3, '', '/^( *|[0-9]+)$/');
+			$rules['Reservfält_15'] = new Rule('A', 1, '', '/^ ?$/');
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Belopp'] = new Rule('N', 12);
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Referense'] = new Rule('A', 16);
+			$rules['NyBetalningsdag'] = new Rule('Date', 8);
+			$rules['Betalningskod'] = new Rule('N', 2, '', '/^0?[1-3]$/');
+
+			$rules['Reservfält_70_80'] = new Rule\Blank(11);
+
+			return $rules;
+		}
+		//</editor-fold>
+
+		//<editor-fold desc="tk8x">
+		/**
+		 * Inbetalningspost
+		 */
+		static function tk82()
+		{
+			$tk = 82;
+			$rules = [];
+			$rules['Transaktionskod'] = new Rule('N', 2, $tk, '/^' . $tk . '$/');
+			$rules['Betalningsdag'] = new Rule('A', 8, 'GENAST', '/^(GENAST *|[0-9]{4}[0-1][0-9][0-3][0-9])$/');
+			$rules['Periodkod'] = new Rule('N', 1, 0, '/^[0-8]$/');
+			$rules['Antal'] = new Rule('AN', 3, '', '/^( *|[0-9]+)$/');
+			$rules['Reservfält_15'] = new Rule('A', 1, '', '/^ ?$/');
+			$rules['Betalarnummer'] = new Rule('N', 16);
+			$rules['Belopp'] = new Rule('N', 12);
+			$rules['Bankgironummer'] = new Rule('N', 10);
+			$rules['Referense'] = new Rule('A', 16);
+			$rules['Reservfält_70_79'] = new Rule\Blank(10);
+			$rules['Betalningsstatuskod'] = new Rule('AN', 1, '', '/^[0129]?$/');
+
+			return $rules;
+		}
+		//</editor-fold>
 	}

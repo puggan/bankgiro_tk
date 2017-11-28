@@ -40,17 +40,20 @@
 			}
 		}
 
-		public function load($list) {
-			$rules = $this->rules;
-			$nr_to_key = [];
-			foreach(array_keys($rules) as $key)
+		public function keys() {
+			$keys = [];
+			foreach($this->rules as $key => $rule)
 			{
-				if($key == 'Transaktionskod') continue;
-				$skip_prefix = 'Reservfält_';
-				if(substr($key, 0, strlen($skip_prefix)) == $skip_prefix) continue;
+				if($rule instanceof Tk\Rule\Blank) continue;
 
-				$nr_to_key[] = $key;
+				$keys[] = $key;
 			}
+
+			return $keys;
+		}
+
+		public function load($list) {
+			$nr_to_key = $this->keys();
 
 			foreach($list as $key => $value) {
 				if(isset($nr_to_key[$key])) $key = $nr_to_key[$key];
