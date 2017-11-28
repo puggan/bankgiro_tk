@@ -11,16 +11,31 @@
 
 	class TkFile5x
 	{
+		/** @var int|string */
 		private $bankgironummer;
+		/** @var string[][]|int[][] */
 		private $customers = [];
+
+		/** @var string CRLF or other separator */
 		public $row_break;
 
+		/**
+		 * TkFile5x constructor.
+		 *
+		 * @param int|string $bankgironummer
+		 * @param string $row_break
+		 */
 		public function __construct($bankgironummer, $row_break = "\r\n")
 		{
 			$this->bankgironummer = $bankgironummer;
 			$this->row_break = $row_break;
 		}
 
+		/**
+		 * @param string[]|int[] $customer
+		 *
+		 * @throws \Exception
+		 */
 		public function add_customer($customer)
 		{
 			if(!isset($customer['Betalarnummer']) AND isset($customer['Kundnummer']))
@@ -28,13 +43,20 @@
 				$customer['Betalarnummer'] = $customer['Kundnummer'];
 			}
 			foreach(['Betalarnummer', 'Bankkontonummer', 'Personnummer'] as $required_key)
-			if(!isset($customer[$required_key]))
 			{
-				throw new \Exception('Missing ' . $required_key);
+				if(!isset($customer[$required_key]))
+				{
+					throw new \Exception('Missing ' . $required_key);
+				}
 			}
 			$this->customers[] = $customer;
 		}
 
+		/**
+		 * @param string[]|int[] $customer
+		 *
+		 * @return string[]
+		 */
 		public function customer_to_tks($customer)
 		{
 			$tks = [];
@@ -60,9 +82,11 @@
 			return $tks;
 		}
 
+		/**
+		 * @return string
+		 */
 		public function __toString()
 		{
-			// TODO: Implement __toString() method.
 			$tks = [];
 			$tks[] = new Bankgiro\Tk51(['Bankgironummer' => $this->bankgironummer]);
 			foreach($this->customers as $customer)
