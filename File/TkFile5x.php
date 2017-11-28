@@ -15,7 +15,7 @@
 		private $customers = [];
 		public $row_break;
 
-		public function __construct($bankgironummer, $row_break = PHP_EOL)
+		public function __construct($bankgironummer, $row_break = "\r\n")
 		{
 			$this->bankgironummer = $bankgironummer;
 			$this->row_break = $row_break;
