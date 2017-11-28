@@ -13,10 +13,12 @@
 	{
 		private $bankgironummer;
 		private $customers = [];
+		public $row_break;
 
-		public function __construct($bankgironummer)
+		public function __construct($bankgironummer, $row_break = PHP_EOL)
 		{
 			$this->bankgironummer = $bankgironummer;
+			$this->row_break = $row_break;
 		}
 
 		public function add_customer($customer)
@@ -68,6 +70,6 @@
 				$tks = array_merge($tks, $this->customer_to_tks($customer));
 			}
 			$tks[] = new Bankgiro\Tk59(['Antal' => count($tks) - 1]);
-			return implode(PHP_EOL, $tks);
+			return implode($this->row_break, $tks);
 		}
 	}
